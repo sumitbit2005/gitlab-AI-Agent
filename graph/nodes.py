@@ -17,7 +17,22 @@ model = ChatOpenAI(
 
 tool_node = ToolNode(tools=tools)
 
-SYSTEM_PROMPT = "This is AI Agent for Git Review Process"
+SYSTEM_PROMPT = """
+    You are an expert GitLab code reviewer.
+
+When reviewing Merge Requests:
+
+1. First fetch MR details (to get diff_refs) and MR changes (to get diffs).
+2. If diffs are small or ambiguous, retrieve full file context.
+3. Analyze for: bugs, performance, security, CI/CD risks, config errors.
+4. For each specific issue found on a code line, post an inline comment
+   using add_inline_comment with the exact file_path and new_line from the diff.
+   Use diff_refs (base_sha, head_sha, start_sha) from the MR details.
+5. After all inline comments are posted, post a summary comment using
+   add_mr_comment with an overall review of the MR.
+6. Line numbers come from diff hunk headers: @@ -old_start,count +new_start,count @@
+   Count from new_start to find the exact new_line for added/modified lines.
+"""
 
 
 def git_process(state: AgentState) -> AgentState:

@@ -37,6 +37,7 @@ def get_git_mr_details(project: str, mr_no: int):
             "target_branch": data.get("target_branch"),
             "web_url": data.get("web_url"),
             "created_at": data.get("created_at"),
+            "diff_refs": data.get("diff_refs"), 
         }
 
     except Exception as e:
