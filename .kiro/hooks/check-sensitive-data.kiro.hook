@@ -1,16 +1,14 @@
 {
   "enabled": true,
   "name": "Check Sensitive Data Before Commit",
-  "description": "Before any write operation, checks that the code being written does not contain company-specific information like internal URLs (e.g. gitlab.mya-dev.io), project paths (e.g. ceon/), tokens, or other sensitive data that should not be pushed to a public repository.",
+  "description": "Before any shell command, checks that staged code does not contain company-specific information like internal URLs, project paths, tokens, or other sensitive data that should not be pushed to a public repository.",
   "version": "1",
   "when": {
     "type": "preToolUse",
-    "toolTypes": [
-      "shell"
-    ]
+    "toolTypes": ["shell"]
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Before executing this shell command, check if it involves git commit or git push. If it does, scan all staged files for company-specific information that should NOT be in a public repo. Look for: 1) Internal URLs like 'gitlab.mya-dev.io', 'mya-dev', or any company domain 2) Project paths like 'ceon/' or specific project names 3) Tokens or API keys (glpat-, sk-proj-) 4) Internal service names or infrastructure details. If any are found, DENY the operation and list the files and lines containing sensitive data. Only allow the commit/push if no sensitive data is found."
+    "prompt": "Before executing this shell command, check if it involves git commit or git push. If it does, scan all staged files for company-specific information that should NOT be in a public repo. Look for: 1) Internal URLs or company domains 2) Internal project paths or specific project names 3) Tokens or API keys 4) Internal service names or infrastructure details. If any are found, DENY the operation and list the files and lines containing sensitive data. Only allow the commit/push if no sensitive data is found."
   }
 }
