@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).parent / ".env", override=True)
 
-GITLAB_URL = os.getenv("GITLAB_URL", "https://gitlab.mya-dev.io")
+GITLAB_URL = os.getenv("GITLAB_URL")
 GITLAB_TOKEN = os.getenv("GITLAB_TOKEN")
 
 HEADERS = {
